@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppMinhasCompras.Views.ListaProduto"
+             Title="Lista de Compras">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Novo +" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto, *">
+        <SearchBar x:Name="txtSearch" 
+                   Placeholder="Buscar produto..." 
+                   SearchButtonPressed="txtSearch_SearchButtonPressed" 
+                   Grid.Row="0" />
+
+        <ListView x:Name="lst_produtos" 
+                  Grid.Row="1" 
+                  ItemSelected="lst_produtos_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Descricao}" 
+                              Detail="{Binding Preco, StringFormat='R$ {0:F2}'}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>
