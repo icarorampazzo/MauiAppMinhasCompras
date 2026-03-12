@@ -9,9 +9,10 @@
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto, *">
+
         <SearchBar x:Name="txtSearch" 
-                   Placeholder="Buscar produto..." 
-                   SearchButtonPressed="txtSearch_SearchButtonPressed" 
+                   Placeholder="Buscar produto dinamicamente..." 
+                   TextChanged="txtSearch_TextChanged" 
                    Grid.Row="0" />
 
         <ListView x:Name="lst_produtos" 

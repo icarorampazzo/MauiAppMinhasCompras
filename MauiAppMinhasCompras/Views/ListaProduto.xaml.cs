@@ -5,47 +5,58 @@ namespace MauiAppMinhasCompras.Views;
 
 public partial class ListaProduto : ContentPage
 {
+    // Coleção dinâmica para atualizar a tela em tempo real (Agenda 04)
+    ObservableCollection<Produto> lista_produtos = new ObservableCollection<Produto>();
+
     public ListaProduto()
     {
         InitializeComponent();
+        lst_produtos.ItemsSource = lista_produtos;
     }
 
-    // Esse método roda toda vez que a tela aparece para o usuário
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        await AtualizarLista("");
+    }
 
+    // Lógica da busca e atualização da lista
+    private async Task AtualizarLista(string busca)
+    {
         try
         {
-            // O App.Db é a chamada para o seu banco de dados. 
-            // Ele pega todos os produtos (GetAll) e joga na lista da tela.
-            lst_produtos.ItemsSource = await App.Db.GetAll();
+            List<Produto> resultadoBusca;
+
+            if (string.IsNullOrEmpty(busca))
+                resultadoBusca = await App.Db.GetAll();
+            else
+                resultadoBusca = await App.Db.Search(busca);
+
+            lista_produtos.Clear();
+            foreach (var item in resultadoBusca)
+            {
+                lista_produtos.Add(item);
+            }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Erro", ex.Message, "OK");
         }
     }
+
+    // Evento disparado a cada letra digitada na busca
+    private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string textoDigitado = e.NewTextValue;
+        await AtualizarLista(textoDigitado);
+    }
+
+    // --- AS FUNÇÕES QUE ESTAVAM FALTANDO! ---
 
     // Botão "Novo +" da barra superior
     private void ToolbarItem_Clicked(object sender, EventArgs e)
     {
-        // Navega para a tela de criar um novo produto
         Navigation.PushAsync(new NovoProduto());
-    }
-
-    // Quando o usuário pesquisa um produto na barra de busca
-    private async void txtSearch_SearchButtonPressed(object sender, EventArgs e)
-    {
-        try
-        {
-            string busca = txtSearch.Text;
-            lst_produtos.ItemsSource = await App.Db.Search(busca);
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Erro", ex.Message, "OK");
-        }
     }
 
     // Quando o usuário toca em um produto da lista (para editar ou excluir)
@@ -56,13 +67,11 @@ public partial class ListaProduto : ContentPage
 
         Produto p = (Produto)e.SelectedItem;
 
-        // Vai para a tela de Editar, passando o produto selecionado na "bagagem"
         Navigation.PushAsync(new EditarProduto
         {
             BindingContext = p
         });
 
-        // Tira a seleção visual do item
         lst_produtos.SelectedItem = null;
     }
 }
