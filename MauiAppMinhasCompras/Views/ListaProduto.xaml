@@ -17,11 +17,38 @@
 
         <ListView x:Name="lst_produtos" 
                   Grid.Row="1" 
-                  ItemSelected="lst_produtos_ItemSelected">
+                  ItemSelected="lst_produtos_ItemSelected"
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Descricao}" 
-                              Detail="{Binding Preco, StringFormat='R$ {0:F2}'}" />
+                    <ViewCell>
+                        <Grid Padding="15" ColumnDefinitions="*, Auto">
+
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding Descricao}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="18" />
+
+                                <Label Text="{Binding Quantidade, StringFormat='Qtd: {0}'}" 
+                                       FontSize="14" 
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                <Label Text="{Binding Preco, StringFormat='Unid: R$ {0:F2}'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray" 
+                                       HorizontalOptions="End"/>
+
+                                <Label Text="{Binding Total, StringFormat='Total: R$ {0:F2}'}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16" 
+                                       TextColor="Green" 
+                                       HorizontalOptions="End"/>
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

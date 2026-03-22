@@ -13,6 +13,10 @@ namespace MauiAppMinhasCompras.Models
         public int Id { get; set; }
         public string Descricao { get; set; }
         public double Quantidade { get; set; }
-        public double Preco {  get; set; }
+        public double Preco { get; set; }
+
+        // Propriedade calculada que não vai para o banco de dados
+        [Ignore]
+        public double Total { get { return Quantidade * Preco; } }
     }
 }
