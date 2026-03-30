@@ -5,48 +5,55 @@
              Title="Lista de Compras">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Relatório" Clicked="OnRelatorioClicked" />
         <ToolbarItem Text="Novo +" Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto, *">
+    <Grid RowDefinitions="Auto, Auto, *">
+
+        <Picker x:Name="pckFiltroCategoria" 
+                Title="Filtrar por Categoria" 
+                SelectedIndexChanged="pckFiltroCategoria_SelectedIndexChanged"
+                Grid.Row="0"
+                Margin="10,5">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Todas</x:String>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
 
         <SearchBar x:Name="txtSearch" 
-                   Placeholder="Buscar produto dinamicamente..." 
+                   Placeholder="Buscar produto..." 
                    TextChanged="txtSearch_TextChanged" 
-                   Grid.Row="0" />
+                   Grid.Row="1" />
 
         <ListView x:Name="lst_produtos" 
-                  Grid.Row="1" 
+                  Grid.Row="2" 
                   ItemSelected="lst_produtos_ItemSelected"
                   HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="15" ColumnDefinitions="*, Auto">
-
                             <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
-                                <Label Text="{Binding Descricao}" 
-                                       FontAttributes="Bold" 
-                                       FontSize="18" />
+                                <Label Text="{Binding Descricao}" FontAttributes="Bold" FontSize="18" />
+
+                                <Label Text="{Binding Categoria, StringFormat='Cat: {0}'}" 
+                                       FontSize="13" TextColor="DarkSlateGray" />
 
                                 <Label Text="{Binding Quantidade, StringFormat='Qtd: {0}'}" 
-                                       FontSize="14" 
-                                       TextColor="Gray" />
+                                       FontSize="13" TextColor="Gray" />
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                                <Label Text="{Binding Preco, StringFormat='Unid: R$ {0:F2}'}" 
-                                       FontSize="12" 
-                                       TextColor="Gray" 
-                                       HorizontalOptions="End"/>
-
-                                <Label Text="{Binding Total, StringFormat='Total: R$ {0:F2}'}" 
-                                       FontAttributes="Bold" 
-                                       FontSize="16" 
-                                       TextColor="Green" 
-                                       HorizontalOptions="End"/>
+                                <Label Text="{Binding Total, StringFormat='R$ {0:F2}'}" 
+                                       FontAttributes="Bold" FontSize="16" TextColor="Green" />
                             </VerticalStackLayout>
-
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

@@ -5,6 +5,7 @@ namespace MauiAppMinhasCompras.Views;
 public partial class EditarProduto : ContentPage
 {
     public EditarProduto()
+
     {
         InitializeComponent();
     }
@@ -21,6 +22,7 @@ public partial class EditarProduto : ContentPage
             p.Descricao = txtDescricao.Text;
             p.Quantidade = Convert.ToDouble(txtQuantidade.Text);
             p.Preco = Convert.ToDouble(txtPreco.Text);
+            p.Categoria = pckCategoria.SelectedItem?.ToString() ?? "Outros";
 
             // Manda o banco atualizar
             await App.Db.Update(p);

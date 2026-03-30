@@ -15,6 +15,9 @@ namespace MauiAppMinhasCompras.Models
         public double Quantidade { get; set; }
         public double Preco { get; set; }
 
+        // CAMPO CADEGORIA ADICIONADO AQUI:
+        public string Categoria { get; set; }
+
         // Propriedade calculada que não vai para o banco de dados
         [Ignore]
         public double Total { get { return Quantidade * Preco; } }

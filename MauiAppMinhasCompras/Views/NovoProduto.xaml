@@ -15,6 +15,18 @@
         <Label Text="Preço:" FontSize="16" />
         <Entry x:Name="txtPreco" Placeholder="Ex: 25.50" Keyboard="Numeric" />
 
+        <Label Text="Categoria:" FontSize="16" />
+        <Picker x:Name="pckCategoria" Title="Selecione a categoria">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
         <Button Text="Salvar Produto" 
                 Clicked="OnSalvarClicked" 
                 BackgroundColor="Blue" 

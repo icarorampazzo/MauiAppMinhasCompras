@@ -19,7 +19,8 @@ public partial class NovoProduto : ContentPage
             {
                 Descricao = txtDescricao.Text,
                 Quantidade = Convert.ToDouble(txtQuantidade.Text),
-                Preco = Convert.ToDouble(txtPreco.Text)
+                Preco = Convert.ToDouble(txtPreco.Text),
+                Categoria = pckCategoria.SelectedItem?.ToString() ?? "Outros" // Add Categoria
             };
 
             // 2. Chamei o banco de dados (App.Db) e usei a função Insert (Create do CRUD)
